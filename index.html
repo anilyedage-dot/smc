@@ -24,14 +24,13 @@
         }
         
         html, body {
-            background-color: #f1f5f9; /* Modern light dashboard background */
+            background-color: #f1f5f9;
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 20px;
             color: #1e293b;
         }
 
-        /* Dashboard Container Card */
         .dashboard-card {
             background: #ffffff;
             border-radius: 12px;
@@ -42,7 +41,6 @@
             border: 1px solid #e2e8f0;
         }
 
-        /* Dashboard Header */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -63,7 +61,7 @@
         }
 
         .dashboard-title-group h2 i {
-            color: #2563eb; /* Corporate Blue Accent */
+            color: #2563eb;
         }
 
         .dashboard-title-group p {
@@ -83,27 +81,68 @@
             letter-spacing: 0.5px;
         }
 
-        /* Map Body Layout */
         .dashboard-body {
             display: flex;
             flex-direction: row;
             position: relative;
         }
 
-        @media (max-width: 900px) {
-            .dashboard-body {
-                flex-direction: column;
-            }
-        }
-
-        /* Override map dimensions to fit professional tile */
         #map {
             width: 100% !important;
             height: 550px !important;
             flex: 1;
+            position: relative;
         }
 
-        /* OpenLayers Map Controls customization for dashboard feel */
+        /* North Arrow Component Styling */
+        .north-arrow {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            border: 1px solid #cbd5e1;
+            pointer-events: none;
+        }
+
+        .north-arrow i {
+            font-size: 20px;
+            color: #2563eb;
+            line-height: 1;
+        }
+
+        .north-arrow span {
+            font-size: 9px;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        /* OpenLayers Scale Line & Controls Tweaks */
+        .ol-scale-line {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border-radius: 4px;
+            padding: 2px 6px;
+            border: 1px solid #cbd5e1;
+            bottom: 10px;
+            left: 10px;
+        }
+        .ol-scale-line-inner {
+            color: #1e293b !important;
+            font-size: 11px;
+            font-weight: 600;
+            border-color: #1e293b !important;
+        }
+
         .ol-control > * {
             background-color: #ffffff !important;
             color: #334155 !important;
@@ -125,7 +164,6 @@
             padding: 4px !important;
         }
 
-        /* Footer info inside tile */
         .dashboard-footer {
             padding: 12px 24px;
             background-color: #f8fafc;
@@ -158,6 +196,12 @@
             <!-- Map Content Panel -->
             <div class="dashboard-body">
                 <div id="map">
+                    <!-- North Arrow Overlay -->
+                    <div class="north-arrow">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>N</span>
+                    </div>
+
                     <div id="popup" class="ol-popup">
                         <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                         <div id="popup-content"></div>
@@ -204,11 +248,29 @@
         <script src="styles/proctected_area_6_style.js"></script>
         <script src="styles/railway_7_style.js"></script>
         <script src="styles/religues_places_8_style.js"></script>
+        <script src="styles/proctected_area_6_style.js"></script>
+        <script src="styles/railway_7_style.js"></script>
+        <script src="styles/religues_places_8_style.js"></script>
         <script src="styles/road_9_style.js"></script>
         <script src="styles/water_10_style.js"></script>
         
         <script src="./layers/layers.js" type="text/javascript"></script> 
         <script src="./resources/Autolinker.min.js"></script>
         <script src="./resources/qgis2web.js"></script>
+
+        <!-- Inject Scale Line Control into OpenLayers Map -->
+        <script>
+            window.addEventListener('load', function() {
+                if (typeof map !== 'undefined') {
+                    var scaleLineControl = new ol.control.ScaleLine({
+                        units: 'metric',
+                        bar: false,
+                        steps: 4,
+                        text: true
+                    });
+                    map.addControl(scaleLineControl);
+                }
+            });
+        </script>
     </body>
 </html>
